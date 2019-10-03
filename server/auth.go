@@ -228,6 +228,13 @@ func (s *Server) configureAuthorization() {
 	// Snapshot server options.
 	opts := s.getOpts()
 
+	bearerAuth, err := BearerAuthFactory(s)
+	if err != nil {
+		s.Debugf("Bearer authorization not configured; %s", err.Error())
+	} else {
+		opts.CustomClientAuthentication = bearerAuth
+	}
+
 	// Check for multiple users first
 	// This just checks and sets up the user map if we have multiple users.
 	if opts.CustomClientAuthentication != nil {

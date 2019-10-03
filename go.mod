@@ -1,6 +1,7 @@
 module github.com/nats-io/nats-server/v2
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/nats-io/jwt v0.3.2
 	github.com/nats-io/nats.go v1.9.1
