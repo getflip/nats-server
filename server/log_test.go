@@ -24,7 +24,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nats-io/nats-server/v2/logger"
+	"github.com/kthomas/nats-server/v2/logger"
 )
 
 func TestSetLogger(t *testing.T) {

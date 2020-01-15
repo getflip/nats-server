@@ -20,7 +20,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nats-io/nats-server/v2/server"
+	"github.com/kthomas/nats-server/v2/server"
 )
 
 func runTLSServers(t *testing.T) (srvA, srvB *server.Server, optsA, optsB *server.Options) {

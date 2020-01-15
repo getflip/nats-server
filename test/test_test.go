@@ -22,7 +22,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nats-io/nats-server/v2/server"
+	"github.com/kthomas/nats-server/v2/server"
 )
 
 func checkFor(t *testing.T, totalWait, sleepDur time.Duration, f func() error) {
