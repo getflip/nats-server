@@ -311,7 +311,7 @@ func (s *Server) isClientAuthorized(c *client) bool {
 	}
 
 	if !authorized && len(c.GetOpts().JWT) == 0 {
-		// attempt fallback
+		s.Debugf("no signed JWT provided; attempting fallback authorization")
 		authorized = s.processClientOrLeafAuthentication(c)
 	}
 
