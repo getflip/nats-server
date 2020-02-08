@@ -303,16 +303,19 @@ func (s *Server) checkAuthentication(c *client) bool {
 // isClientAuthorized will check the client against the proper authorization method and data.
 // This could be nkey, token, or username/password based.
 func (s *Server) isClientAuthorized(c *client) bool {
-	opts := s.getOpts()
+	authorized := false
 
-	// Check custom auth first, then jwts, then nkeys, then
-	// multiple users with TLS map if enabled, then token,
-	// then single user/pass.
+	opts := s.getOpts()
 	if opts.CustomClientAuthentication != nil {
-		return opts.CustomClientAuthentication.Check(c)
+		authorized = opts.CustomClientAuthentication.Check(c)
 	}
 
-	return s.processClientOrLeafAuthentication(c)
+	if !authorized {
+		// attempt fallback
+		authorized = s.processClientOrLeafAuthentication(c)
+	}
+
+	return authorized
 }
 
 func (s *Server) processClientOrLeafAuthentication(c *client) bool {
