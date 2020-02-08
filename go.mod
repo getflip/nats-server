@@ -7,8 +7,8 @@ require (
 	github.com/nats-io/nats.go v1.9.1
 	github.com/nats-io/nkeys v0.1.3
 	github.com/nats-io/nuid v1.0.1
-	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
-	golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e
+	golang.org/x/crypto v0.0.0-20200208060501-ecb85df21340
+	golang.org/x/sys v0.0.0-20200202164722-d101bd2416d5
 )
 
 go 1.13
