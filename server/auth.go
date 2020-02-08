@@ -310,7 +310,7 @@ func (s *Server) isClientAuthorized(c *client) bool {
 		authorized = opts.CustomClientAuthentication.Check(c)
 	}
 
-	if !authorized {
+	if !authorized && len(c.GetOpts().JWT) == 0 {
 		// attempt fallback
 		authorized = s.processClientOrLeafAuthentication(c)
 	}
