@@ -230,7 +230,7 @@ func (s *Server) configureAuthorization() {
 
 	bearerAuth, err := BearerAuthFactory(s)
 	if err != nil {
-		s.Debugf("Bearer authorization not configured; %s", err.Error())
+		s.Warnf("Bearer authorization not configured; %s", err.Error())
 	} else {
 		opts.CustomClientAuthentication = bearerAuth
 	}
