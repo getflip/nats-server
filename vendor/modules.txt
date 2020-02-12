@@ -1,5 +1,15 @@
 # github.com/dgrijalva/jwt-go v3.2.0+incompatible
 github.com/dgrijalva/jwt-go
+# github.com/google/logger v1.0.1
+github.com/google/logger
+# github.com/gorilla/websocket v1.4.1
+github.com/gorilla/websocket
+# github.com/kthomas/go-logger v0.0.0-20190616094252-01c360658513
+github.com/kthomas/go-logger
+# github.com/kthomas/go-self-signed-cert v0.0.0-20200121102317-5ce1ee6149aa
+github.com/kthomas/go-self-signed-cert
+# github.com/kthomas/wsgnatsd v0.8.5-0.20200212002201-3b4caa0f36f0
+github.com/kthomas/wsgnatsd/wsproxy
 # github.com/nats-io/jwt v0.3.2
 github.com/nats-io/jwt
 # github.com/nats-io/nats.go v1.9.1
