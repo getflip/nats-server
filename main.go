@@ -20,6 +20,7 @@ import (
 	"runtime"
 
 	"github.com/kthomas/nats-server/v2/server"
+	"github.com/kthomas/wsgnatsd/wsproxy"
 )
 
 var usageStr = `
@@ -105,6 +106,11 @@ func main() {
 
 	// Configure the logger based on the flags
 	s.ConfigureLogger()
+
+	// Embedded websocket support via github.com/kthomas/wsgnatsd
+	go func() {
+		wsproxy.ListenAndServeEmbedded()
+	}()
 
 	// Start things up. Block here until done.
 	if err := server.Run(s); err != nil {

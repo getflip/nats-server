@@ -40,6 +40,9 @@ nats-server
 gnatsd
 /util/mkpasswd
 
+.private.key
+.server.crt
+
 # coverage
 coverage.out
 
