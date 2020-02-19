@@ -78,7 +78,13 @@ func (bearer *BearerAuth) resolvePublicKey(fingerprint *string) *rsa.PublicKey {
 	if fingerprint == nil {
 		keypair = bearer.publicKeys[bearer.resolveJWTFingerprints()[0]]
 	} else {
-		keypair = bearer.publicKeys[*fingerprint]
+		if jwtKeypair, jwtKeypairOk := bearer.publicKeys[*fingerprint]; jwtKeypairOk {
+			keypair = jwtKeypair
+		}
+	}
+
+	if keypair == nil {
+		return nil
 	}
 
 	return &keypair.publicKey
