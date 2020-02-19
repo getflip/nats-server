@@ -15,6 +15,8 @@ github.com/kthomas/wsgnatsd v0.8.5-0.20200212002201-3b4caa0f36f0 h1:FmLC7x/ObfeX
 github.com/kthomas/wsgnatsd v0.8.5-0.20200212002201-3b4caa0f36f0/go.mod h1:HxBvANxvhquNOfeSjTNjYMjg1iVXAgBwCcw+i8ZZbcM=
 github.com/kthomas/wsgnatsd v0.8.5-0.20200219125850-574fc8477b64 h1:vzERuEZw6+npnaMZdF2m9sLEr/RzU4GGeZAfz/0dG0U=
 github.com/kthomas/wsgnatsd v0.8.5-0.20200219125850-574fc8477b64/go.mod h1:HxBvANxvhquNOfeSjTNjYMjg1iVXAgBwCcw+i8ZZbcM=
+github.com/kthomas/wsgnatsd v0.8.5-0.20200219130405-af1b0501ad95 h1:7kB74aGW6OgBTe/Dvls5XAnwrEfxfHSvmusV4ZsnydI=
+github.com/kthomas/wsgnatsd v0.8.5-0.20200219130405-af1b0501ad95/go.mod h1:HxBvANxvhquNOfeSjTNjYMjg1iVXAgBwCcw+i8ZZbcM=
 github.com/nats-io/jwt v0.3.0/go.mod h1:fRYCDE99xlTsqUzISS1Bi75UBJ6ljOJQOAAu5VglpSg=
 github.com/nats-io/jwt v0.3.2 h1:+RB5hMpXUUA2dfxuhBTEkMOrYmM+gKIZYS1KjSostMI=
 github.com/nats-io/jwt v0.3.2/go.mod h1:/euKqTS1ZD+zzjYrY7pseZrTtWQSjujC7xjPc8wL6eU=
