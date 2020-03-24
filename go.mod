@@ -2,7 +2,7 @@ module github.com/kthomas/nats-server/v2
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/kthomas/wsgnatsd v0.8.5-0.20200219131611-637609986906
+	github.com/kthomas/wsgnatsd v0.8.5-0.20200324094226-06b5db6ba53e
 	github.com/nats-io/jwt v0.3.2
 	github.com/nats-io/nats.go v1.9.1
 	github.com/nats-io/nkeys v0.1.3
