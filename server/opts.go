@@ -32,8 +32,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/nats-io/jwt"
 	"github.com/kthomas/nats-server/v2/conf"
+	"github.com/nats-io/jwt"
 	"github.com/nats-io/nkeys"
 )
 
@@ -231,6 +231,9 @@ type Options struct {
 	// private fields, used for testing
 	gatewaysSolicitDelay time.Duration
 	routeProto           int
+
+	WSHostPort   string
+	WSRequireTLS bool
 }
 
 type netResolver interface {
@@ -3037,7 +3040,6 @@ func ConfigureOptions(fs *flag.FlagSet, args []string, printVersion, printHelp, 
 		err                    error
 	)
 
-	fs.BoolVar(&showHelp, "h", false, "Show this message.")
 	fs.BoolVar(&showHelp, "help", false, "Show this message.")
 	fs.IntVar(&opts.Port, "port", 0, "Port to listen on.")
 	fs.IntVar(&opts.Port, "p", 0, "Port to listen on.")
@@ -3092,6 +3094,9 @@ func ConfigureOptions(fs *flag.FlagSet, args []string, printVersion, printHelp, 
 	fs.StringVar(&opts.TLSKey, "tlskey", "", "Private key for server certificate.")
 	fs.StringVar(&opts.TLSCaCert, "tlscacert", "", "Client certificate CA for verification.")
 	fs.IntVar(&opts.MaxTracedMsgLen, "max_traced_msg_len", 0, "Maximum printable length for traced messages. 0 for unlimited")
+
+	fs.StringVar(&opts.WSHostPort, "ws-host", "0.0.0.0:4221", "ws-host - default is 0.0.0.0:4221")
+	fs.BoolVar(&opts.WSRequireTLS, "wstls", true, "require-tls - require the use of TLS by generating self-signed certificate")
 
 	// The flags definition above set "default" values to some of the options.
 	// Calling Parse() here will override the default options with any value

@@ -8,7 +8,7 @@ RUN apk add --update git
 
 COPY . .
 
-RUN CGO_ENABLED=0 GO111MODULE=off go build -v -a -tags netgo -installsuffix netgo -ldflags "-s -w -X github.com/kthomas/nats-server/server.gitCommit=`git rev-parse --short HEAD`" -o /nats-server
+RUN go mod tidy && go build -v -a -tags netgo -installsuffix netgo -ldflags "-s -w -X github.com/kthomas/nats-server/server.gitCommit=`git rev-parse --short HEAD`" -o /nats-server
 
 FROM alpine:3.10
 
