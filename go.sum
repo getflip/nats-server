@@ -11,12 +11,6 @@ github.com/kthomas/go-logger v0.0.0-20190616094252-01c360658513/go.mod h1:OljTeA
 github.com/kthomas/go-self-signed-cert v0.0.0-20200121102317-5ce1ee6149aa h1:V124rX4ZWG7boBNnbe00JiLi+mdOutkAMaNHkfAYg/0=
 github.com/kthomas/go-self-signed-cert v0.0.0-20200121102317-5ce1ee6149aa/go.mod h1:KJCUwZyO/D5w+38wU0ENRVDh+aYTvAFeyR3Fma8ZJqs=
 github.com/kthomas/nats-server/v2 v2.1.1-0.20200115125752-538041d9a21a/go.mod h1:JMzWixVJqbghTBXKRU7s320pNY1BBN+9f6yXQ+zoAcA=
-github.com/kthomas/wsgnatsd v0.8.5-0.20200324094226-06b5db6ba53e h1:CsrgCb5/8TBMUqE8Ux0Cl2PsS2skqn53mldN8AdujP0=
-github.com/kthomas/wsgnatsd v0.8.5-0.20200324094226-06b5db6ba53e/go.mod h1:HxBvANxvhquNOfeSjTNjYMjg1iVXAgBwCcw+i8ZZbcM=
-github.com/kthomas/wsgnatsd v0.8.5-0.20200416163455-cd6811f9f9e6 h1:BLARcDrBl7gXAhExD45VKp2e9VAqAqgViWMJksnjEpc=
-github.com/kthomas/wsgnatsd v0.8.5-0.20200416163455-cd6811f9f9e6/go.mod h1:HxBvANxvhquNOfeSjTNjYMjg1iVXAgBwCcw+i8ZZbcM=
-github.com/kthomas/wsgnatsd v0.8.5-0.20200416163653-5ccb71a6b1e7 h1:DKSKh/aP0d+kLmKp6qOV3HiLeXDX+OaKggl1rbvXY14=
-github.com/kthomas/wsgnatsd v0.8.5-0.20200416163653-5ccb71a6b1e7/go.mod h1:HxBvANxvhquNOfeSjTNjYMjg1iVXAgBwCcw+i8ZZbcM=
 github.com/kthomas/wsgnatsd v0.8.5-0.20200416163925-01ba07e51d75 h1:+guUdy66VFKYIbSrRxLDZAE7S5tuyltU3EG8v2551/4=
 github.com/kthomas/wsgnatsd v0.8.5-0.20200416163925-01ba07e51d75/go.mod h1:HxBvANxvhquNOfeSjTNjYMjg1iVXAgBwCcw+i8ZZbcM=
 github.com/nats-io/jwt v0.3.0/go.mod h1:fRYCDE99xlTsqUzISS1Bi75UBJ6ljOJQOAAu5VglpSg=
