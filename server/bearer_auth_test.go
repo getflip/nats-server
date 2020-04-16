@@ -208,9 +208,9 @@ func TestBearerAuthJWTWithPubSubAllowDenyPermissions(t *testing.T) {
 	}
 }
 
-func TestBearerAuthJWTWithResponsePermissions(t *testing.T) {
+func TestBearerAuthJWTWithAllowResponsesMapPermissions(t *testing.T) {
 	bearerAuthJWT, _ := encodeValidBearerAuthJWT(map[string]interface{}{
-		"responses": map[string]interface{}{
+		"allow_responses": map[string]interface{}{
 			"max": 22,
 			"ttl": 100 * time.Millisecond,
 		},
@@ -241,6 +241,39 @@ func TestBearerAuthJWTWithResponsePermissions(t *testing.T) {
 	if c.perms.resp.Expires != 100*time.Millisecond {
 		t.Fatalf("Expected client perms for response permissions Expires to be same as jwt: %v vs %v",
 			c.perms.resp.Expires, 100*time.Millisecond)
+	}
+}
+
+func TestBearerAuthJWTWithAllowResponsesBoolPermissions(t *testing.T) {
+	bearerAuthJWT, _ := encodeValidBearerAuthJWT(map[string]interface{}{
+		"allow_responses": true,
+	})
+	s, c, _ := setupBearerAuthTest(t, bearerAuthJWT, "+OK")
+	defer cleanupBearerTest(t, s)
+
+	// Now check client to make sure permissions transferred.
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	if c.perms == nil {
+		t.Fatalf("Expected client permissions to be set")
+	}
+	if c.perms.pub.allow == nil {
+		t.Fatalf("Expected client perms for pub allow to be non-nil")
+	}
+	if lpa := c.perms.pub.allow.Count(); lpa != 0 {
+		t.Fatalf("Expected 0 publish allow subjects, got %d", lpa)
+	}
+	if c.perms.resp == nil {
+		t.Fatalf("Expected client perms for response permissions to be non-nil")
+	}
+	if c.perms.resp.MaxMsgs != -1 {
+		t.Fatalf("Expected client perms for response permissions MaxMsgs to be %v, got %v",
+			-1, c.perms.resp.MaxMsgs)
+	}
+	if c.perms.resp.Expires != -1*time.Second {
+		t.Fatalf("Expected client perms for response permissions Expires to be %v, got %v",
+			-1*time.Second, c.perms.resp.Expires)
 	}
 }
 
@@ -275,9 +308,9 @@ func TestBearerAuthJWTWithDefaultResponsePermissions(t *testing.T) {
 	}
 }
 
-func TestBearerAuthJWTWithNegativeValueResponsePermissions(t *testing.T) {
+func TestBearerAuthJWTWithNegativeValueAllowResponsesMapPermissions(t *testing.T) {
 	bearerAuthJWT, _ := encodeValidBearerAuthJWT(map[string]interface{}{
-		"responses": map[string]interface{}{
+		"allow_responses": map[string]interface{}{
 			"max": -1,
 			"ttl": -1 * time.Second,
 		},

@@ -143,12 +143,10 @@ func (bearer *BearerAuth) Check(c ClientAuthentication) bool {
 					"deny":  []string{},
 				}
 			}
-			if _, respOk := permissionsClaim["responses"]; !respOk {
-				permissionsClaim["responses"] = map[string]interface{}{
-					"max": DEFAULT_ALLOW_RESPONSE_MAX_MSGS,
-					"ttl": DEFAULT_ALLOW_RESPONSE_EXPIRATION,
-				}
+			if _, allowResponsesOk := permissionsClaim["subscribe"]; !allowResponsesOk {
+				permissionsClaim["allow_responses"] = false
 			}
+
 			permissionsRaw, _ := json.Marshal(permissionsClaim)
 			json.Unmarshal(permissionsRaw, &permissions) // HACK
 		} else {
