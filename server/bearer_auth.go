@@ -158,7 +158,8 @@ func (bearer *BearerAuth) Check(c ClientAuthentication) bool {
 		return false
 	}
 
-	bearer.server.Debugf("registering user with permissions: %s", permissions)
+	permissionsJSON, _ := json.MarshalIndent(permissions, "", "  ")
+	bearer.server.Debugf("registering ephemeral user with permissions from signed JWT:\n%s", string(permissionsJSON))
 	c.RegisterUser(&User{
 		Permissions: permissions,
 	})
