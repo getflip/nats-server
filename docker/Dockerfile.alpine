@@ -12,7 +12,7 @@ RUN go mod tidy && go build -v -a -tags netgo -installsuffix netgo -ldflags "-s 
 
 FROM alpine:3.10
 
-RUN apk add --update ca-certificates && mkdir -p /nats/bin && mkdir /nats/conf
+RUN apk add --update bash ca-certificates && mkdir -p /nats/bin && mkdir /nats/conf
 
 COPY docker/nats-server.conf /nats/conf/nats-server.conf
 COPY --from=builder /nats-server /nats/bin/nats-server
