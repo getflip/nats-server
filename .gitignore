@@ -27,6 +27,9 @@ _testmain.go
 # IntelliJ
 .idea/
 
+# VSCode
+.vscode
+
 # Emacs
 *~
 \#*\#
@@ -48,3 +51,4 @@ coverage.out
 
 # Cross compiled binaries
 pkg
+

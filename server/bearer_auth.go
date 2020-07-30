@@ -22,18 +22,26 @@ type jwtKeypair struct {
 type BearerAuth struct {
 	server     *Server
 	publicKeys map[string]*jwtKeypair
+	skipVerification bool
 }
 
 // BearerAuthFactory initializes and configures JWT bearer auth for the given server
 func BearerAuthFactory(s *Server) (*BearerAuth, error) {
 	auth := &BearerAuth{
 		server: s,
+		skipVerification: skipJwtVerification(),
 	}
-	err := auth.requireJWTVerifiers()
-	if err != nil {
-		return nil, fmt.Errorf("failed to require JWT verifiers")
+	if !auth.skipVerification {
+		err := auth.requireJWTVerifiers()
+		if err != nil {
+			return nil, fmt.Errorf("failed to require JWT verifiers")
+		}
 	}
 	return auth, nil
+}
+
+func skipJwtVerification() (bool) {
+	return os.Getenv("JWT_SKIP_VERIFICATION") == "true"
 }
 
 func (bearer *BearerAuth) requireJWTVerifiers() error {
@@ -93,29 +101,36 @@ func (bearer *BearerAuth) resolvePublicKey(fingerprint *string) *rsa.PublicKey {
 // Check parses the JWT as a bearer token
 func (bearer *BearerAuth) Check(c ClientAuthentication) bool {
 	bearerToken := c.GetOpts().JWT
-	jwtToken, err := jwt.Parse(bearerToken, func(_jwtToken *jwt.Token) (interface{}, error) {
-		if _, ok := _jwtToken.Method.(*jwt.SigningMethodRSA); !ok {
-			return nil, fmt.Errorf("failed to parse bearer authorization; unexpected signing alg: %s", _jwtToken.Method.Alg())
-		}
-
-		var kid *string
-		if kidhdr, ok := _jwtToken.Header["kid"].(string); ok {
-			kid = &kidhdr
-		}
-
-		publicKey := bearer.resolvePublicKey(kid)
-		if publicKey == nil {
-			msg := "failed to resolve a valid JWT verification key"
-			if kid != nil {
-				msg = fmt.Sprintf("%s; invalid kid specified in header: %s", msg, *kid)
-			} else {
-				msg = fmt.Sprintf("%s; no default verification key configured", msg)
+	var jwtToken *jwt.Token
+	var err error
+	if !bearer.skipVerification {
+		jwtToken, err = jwt.Parse(bearerToken, func(_jwtToken *jwt.Token) (interface{}, error) {
+			if _, ok := _jwtToken.Method.(*jwt.SigningMethodRSA); !ok {
+				return nil, fmt.Errorf("failed to parse bearer authorization; unexpected signing alg: %s", _jwtToken.Method.Alg())
 			}
-			return nil, fmt.Errorf(msg)
-		}
 
-		return publicKey, nil
-	})
+			var kid *string
+			if kidhdr, ok := _jwtToken.Header["kid"].(string); ok {
+				kid = &kidhdr
+			}
+
+			publicKey := bearer.resolvePublicKey(kid)
+			if publicKey == nil {
+				msg := "failed to resolve a valid JWT verification key"
+				if kid != nil {
+					msg = fmt.Sprintf("%s; invalid kid specified in header: %s", msg, *kid)
+				} else {
+					msg = fmt.Sprintf("%s; no default verification key configured", msg)
+				}
+				return nil, fmt.Errorf(msg)
+			}
+
+			return publicKey, nil
+		})
+	} else {
+		bearer.server.Noticef("skipping jwt verification")
+		jwtToken, _, err = new(jwt.Parser).ParseUnverified(bearerToken, jwt.MapClaims{})
+	}
 	if err != nil {
 		bearer.server.Debugf(fmt.Sprintf("failed to parse bearer authorization; %s", err.Error()))
 		return false
