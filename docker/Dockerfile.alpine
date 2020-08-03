@@ -24,4 +24,6 @@ RUN ln -ns /nats/bin/nats-server /bin/nats-server && ln -ns /nats/bin/nats-serve
 # Expose client, management, cluster and gateway ports
 EXPOSE 4221 4222 8222 6222 5222
 
+ENV JWT_SKIP_VERIFICATION true
+
 ENTRYPOINT ["/bin/nats-server"]
