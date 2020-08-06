@@ -29,11 +29,14 @@ func BearerAuthFactory(s *Server) (*BearerAuth, error) {
 	auth := &BearerAuth{
 		server: s,
 	}
-	err := auth.requireJWTVerifiers()
-	if err != nil {
-		return nil, fmt.Errorf("failed to require JWT verifiers")
+	if false {
+		err := auth.requireJWTVerifiers()
+		if err != nil {
+			return nil, fmt.Errorf("failed to require JWT verifiers")
+		}
 	}
 	return auth, nil
+
 }
 
 func (bearer *BearerAuth) requireJWTVerifiers() error {
@@ -93,29 +96,30 @@ func (bearer *BearerAuth) resolvePublicKey(fingerprint *string) *rsa.PublicKey {
 // Check parses the JWT as a bearer token
 func (bearer *BearerAuth) Check(c ClientAuthentication) bool {
 	bearerToken := c.GetOpts().JWT
-	jwtToken, err := jwt.Parse(bearerToken, func(_jwtToken *jwt.Token) (interface{}, error) {
-		if _, ok := _jwtToken.Method.(*jwt.SigningMethodRSA); !ok {
-			return nil, fmt.Errorf("failed to parse bearer authorization; unexpected signing alg: %s", _jwtToken.Method.Alg())
-		}
+	// f := func(_jwtToken *jwt.Token) (interface{}, error) {
+	// 	if _, ok := _jwtToken.Method.(*jwt.SigningMethodRSA); !ok {
+	// 		return nil, fmt.Errorf("failed to parse bearer authorization; unexpected signing alg: %s", _jwtToken.Method.Alg())
+	// 	}
 
-		var kid *string
-		if kidhdr, ok := _jwtToken.Header["kid"].(string); ok {
-			kid = &kidhdr
-		}
+	// 	var kid *string
+	// 	if kidhdr, ok := _jwtToken.Header["kid"].(string); ok {
+	// 		kid = &kidhdr
+	// 	}
 
-		publicKey := bearer.resolvePublicKey(kid)
-		if publicKey == nil {
-			msg := "failed to resolve a valid JWT verification key"
-			if kid != nil {
-				msg = fmt.Sprintf("%s; invalid kid specified in header: %s", msg, *kid)
-			} else {
-				msg = fmt.Sprintf("%s; no default verification key configured", msg)
-			}
-			return nil, fmt.Errorf(msg)
-		}
+	// 	publicKey := bearer.resolvePublicKey(kid)
+	// 	if publicKey == nil {
+	// 		msg := "failed to resolve a valid JWT verification key"
+	// 		if kid != nil {
+	// 			msg = fmt.Sprintf("%s; invalid kid specified in header: %s", msg, *kid)
+	// 		} else {
+	// 			msg = fmt.Sprintf("%s; no default verification key configured", msg)
+	// 		}
+	// 		return nil, fmt.Errorf(msg)
+	// 	}
 
-		return publicKey, nil
-	})
+	// 	return publicKey, nil
+	// }
+	jwtToken, err := jwt.Parse(bearerToken, KeycloakInstance(bearer.server).PublicKey)
 	if err != nil {
 		bearer.server.Debugf(fmt.Sprintf("failed to parse bearer authorization; %s", err.Error()))
 		return false
