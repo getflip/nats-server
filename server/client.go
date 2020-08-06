@@ -734,8 +734,10 @@ func (c *client) checkExpiration(claims *jwt.ClaimsData) {
 	if claims.Expires < tn {
 		return
 	}
+	/* Disabled closing of connection when token expires
 	expiresAt := time.Duration(claims.Expires - tn)
 	c.setExpirationTimer(expiresAt * time.Second)
+	*/
 }
 
 // This will load up the deny structure used for filtering delivered
