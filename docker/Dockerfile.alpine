@@ -25,6 +25,6 @@ RUN ln -ns /nats/bin/nats-server /bin/nats-server && ln -ns /nats/bin/nats-serve
 EXPOSE 4221 4222 8222 6222 5222
 
 # hardcoding the host here for now, the k8s nats chart doesn't provide the possibility to add custom env variables
-ENV KEYCLOAK_HOST keycloak-http
+ENV KEYCLOAK_HOST flip-keycloakx-http
 
 ENTRYPOINT ["/bin/nats-server"]
