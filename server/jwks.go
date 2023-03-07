@@ -59,7 +59,7 @@ func (keycloak *Keycloak) publicKey(token *jwt.Token, retry bool) (interface{}, 
 		keycloak.server.Debugf("Fetching JWKS (realm '%s')", realm)
 		jwksFetch, err := jwk.FetchHTTP(jwksURL)
 		if err != nil {
-			keycloak.server.Errorf("Failed to fetch JWKS (realm '%s)", realm)
+			keycloak.server.Errorf("Failed to fetch JWKS for realm '%s' from %s", realm, jwksURL)
 			return nil, err
 		}
 		jwks = jwksFetch
